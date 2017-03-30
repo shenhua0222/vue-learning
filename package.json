@@ -1,0 +1,29 @@
+{
+  "name": "imitate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "demo1": "webpack-dev-server --config github-file-explorer/webpack.config.js --content-base github-file-explorer"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.24.0",
+    "css-loader": "^0.27.3",
+    "filter-loader": "^1.0.1",
+    "style-loader": "^0.16.0",
+    "vue-loader": "^9.7.0",
+    "vue-template-compiler": "^2.2.6",
+    "webpack": "^2.3.2",
+    "webpack-dev-server": "^2.4.2"
+  },
+  "dependencies": {
+    "vue": "^2.2.6",
+    "vue-resource": "^1.2.1",
+    "vue-router": "^2.3.0"
+  }
+}
