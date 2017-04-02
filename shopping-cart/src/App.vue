@@ -18,31 +18,38 @@
 							<router-link to='/home'>iPhone 6S</router-link>
 						</li>
 						<li>
-							<router-link to='/shopping'>购物车</router-link>
-							<span class="badge" @send-counter='get()'>{{count}}</span>
+							<router-link to='/cart'>
+								购物车
+								<span class="badge bg-danger" v-if='count !== 0'>{{count}}</span>
+							</router-link>
+							
 						</li>
 					</ul>
 				</div>
 			</div>
 		</nav>
-
+		<!-- 路由 -->
 		<router-view></router-view>
 	</div>
 </template>
 
 <script>
+	import store from './vuex/store'
 	export default {
 		name: 'App',
-		data() {
-			return {
-				count: ''
+		store,
+		computed: {
+			count() {
+				return store.state.count;
 			}
-		},
-		mounted() {
-			ev.$on('send-count', function(data) {
-				this.count = data;
-			}.bind(this))
 		}
+		
 	}
 </script>
+
+<style>
+	.bg-danger {
+		background:#d9534f;
+	}
+</style>
 

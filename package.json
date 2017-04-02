@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "demo1": "webpack-dev-server --config github-file-explorer/webpack.config.js --content-base github-file-explorer"
+    "demo1": "webpack-dev-server --config github-file-explorer/webpack.config.js --content-base github-file-explorer",
+    "demo2": "webpack-dev-server --config shopping-cart/webpack.config.js --content-base shopping-cart"
   },
   "author": "",
   "license": "ISC",
@@ -24,6 +25,7 @@
   "dependencies": {
     "vue": "^2.2.6",
     "vue-resource": "^1.2.1",
-    "vue-router": "^2.3.0"
+    "vue-router": "^2.3.0",
+    "vuex": "^2.2.1"
   }
 }

@@ -28,8 +28,8 @@
 				</div>
 				<div class="col-sm-9">
 					<div class="color-choose">
-						<a class="btn btn-default btn-sm" v-for='(val, index) in colors' @click='changeUrl(index)'>
-							{{val}}
+						<a class="btn btn-default btn-sm" v-for='val in colors' :class='{active: val.url == imgUrl}' @click='changeUrl(val.color,val.url)'>
+							{{val.color}}
 						</a>
 					</div>
 				</div>
@@ -38,14 +38,12 @@
 				<div class="col-sm-4 info-title">
 					<span>存储容量：</span>
 				</div>
-				<div class="col-sm-8" @click='changeModel($event)'>
-					<a href="#" class="btn btn-default btn-sm" data-index='0'>16GB</a>
-					<a href="#" class="btn btn-default btn-sm" data-index='1'>64GB</a>
-					<a href="#" class="btn btn-default btn-sm" data-index='2'>128GB</a>
+				<div class="col-sm-8">
+					<a href="#" class="btn btn-default btn-sm" v-for='val in styles' :class='{active: val.price == price}' @click='changeModel(val.style,val.price)'>{{val.style}}</a>
 				</div>
 			</div>
 			<hr>
-			<button class="btn btn-danger" @click='send'>
+			<button class="btn btn-danger btn-block" @click='increment' :disabled='!isSelected'>
 				<span class="glyphicon glyphicon-shopping-cart"></span>
 				加入购物车
 			</button>
@@ -54,40 +52,44 @@
 </template>
 
 <script>
+	import store from '../vuex/store'
 	export default {
 		name: 'Home',
+		store,
 		data() {
 			return {
-				counter: 0,
 				imgUrl: 'src/img/iphone6s-gold.png',
-				index: '',
-				price: '5288 - 6888',
-				numbers: [5288,6088,6888],
-				colors: ['rosegold','gray','gold','silver']
+				isSelected: false
 			}
 		},
 		methods: {
-			changeUrl(n) {
-				this.imgUrl = 'src/img/iphone6s-' + this.colors[n] + '.png';
+			changeUrl(color, url) {
+				store.state.selectColor = color;
+				this.imgUrl = url;
 			},
-			changeModel(ev) {
-				if(ev.target.nodeName.toUpperCase() === 'A'){
-					this.index = ev.target.getAttribute('data-index');
-					this.price = this.numbers[this.index];
-				}
+			changeModel(model,price) {
+				this.isSelected = true;
+				store.state.price = price;
+				store.state.selectModel = model;
 			},
-			send() {
-				if(this.index !== ''){
-					this.counter++;
-					ev.$emit('send-count',this.counter);
-				}
+			increment() {
+				store.commit('increment');
+				var obj = { color: store.state.selectColor, style: store.state.selectModel, price: store.state.price };
+				store.state.goods.push(obj);
+				store.state.totalPrice += store.state.price;
 			}
 		},
-		// computed: {
-		// 	imgUrl() {
-		// 		return 1
-		// 	}
-		// }
+		computed: {
+			colors() {
+				return store.state.colors;
+			},
+			styles() {
+				return store.state.models;
+			},
+			price() {
+				return store.state.price;
+			}
+		}
 	}
 </script>
 
@@ -126,6 +128,11 @@
 		font-size:14px;
 	}
 	.item-info a:hover {
+		border:2px solid #c0392b;
+		background:transparent;
+	}
+
+	.item-info .active {
 		border:2px solid #c0392b;
 		background:transparent;
 	}
